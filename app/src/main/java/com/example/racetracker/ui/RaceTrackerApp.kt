@@ -115,22 +115,18 @@ private fun StatusIndicator(
     progressFactor: Float,
     modifier: Modifier = Modifier
 ) {
-    Row(
+    Column (
         modifier = modifier
     ) {
+        Text(
+            text = participantName,
+            style = MaterialTheme.typography.bodyMedium,
+        )
         Box(
             modifier = Modifier
                 .size(dimensionResource(R.dimen.icon_size))
-                .padding(end = dimensionResource(R.dimen.padding_small))
         ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_walk),
-                contentDescription = null,
-                modifier = Modifier.size(dimensionResource(R.dimen.icon_size))
-                    .padding(end = dimensionResource(R.dimen.padding_small)),
-            )
-            // Calcul de la position de l'icône en fonction du progrès
-            val iconPosition = (progressFactor * 100).toInt().coerceIn(0, 100)
+            val iconPosition = (progressFactor * 250).toInt().coerceIn(0, 2000)
             Icon(
                 painter = painterResource(R.drawable.ic_walk),
                 contentDescription = null,
