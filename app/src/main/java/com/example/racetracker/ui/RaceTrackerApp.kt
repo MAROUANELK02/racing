@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -19,10 +20,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun RaceTrackerApp() {
     val playerOne = remember {
-        RaceParticipant(name = "Player 1", progressIncrement = 1)
+        RaceParticipant(name = "Player 1", progressIncrement = 1, color = Color(red = 0xFF, green = 0x79, blue = 0x6B))
     }
     val playerTwo = remember {
-        RaceParticipant(name = "Player 2", progressIncrement = 2)
+        RaceParticipant(name = "Player 2", progressIncrement = 2, color = Color(red = 0x8B, green = 0xC3, blue = 0x4A))
     }
     var raceInProgress by remember { mutableStateOf(false) }
 
@@ -79,6 +80,7 @@ private fun RaceTrackerScreen(
                     playerOne.maxProgress
                 ),
                 progressFactor = playerOne.progressFactor,
+                playerColor = playerOne.color,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.size(dimensionResource(R.dimen.padding_large)))
@@ -91,6 +93,7 @@ private fun RaceTrackerScreen(
                 ),
                 progressFactor = playerTwo.progressFactor,
                 modifier = Modifier.fillMaxWidth(),
+                playerColor = playerTwo.color,
             )
             Spacer(modifier = Modifier.size(dimensionResource(R.dimen.padding_large)))
             RaceControls(
@@ -113,7 +116,8 @@ private fun StatusIndicator(
     currentProgress: Int,
     maxProgress: String,
     progressFactor: Float,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    playerColor: Color
 ) {
     Column (
         modifier = modifier
@@ -130,6 +134,7 @@ private fun StatusIndicator(
             Icon(
                 painter = painterResource(R.drawable.ic_walk),
                 contentDescription = null,
+                tint = playerColor,
                 modifier = Modifier
                     .size(dimensionResource(R.dimen.icon_size))
                     .offset(x = iconPosition.dp)
@@ -143,7 +148,8 @@ private fun StatusIndicator(
                 progress = progressFactor,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(dimensionResource(R.dimen.progress_indicator_height))
+                    .height(dimensionResource(R.dimen.progress_indicator_height)),
+                color = playerColor
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
